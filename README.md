@@ -11,7 +11,7 @@ https://chrome.google.com/webstore/detail/gfdaokhcoidlgljipinbbcafapmmdanb
 
 ## Installation
 ```
-go get github.com/pmorjan/pwcalc
+go get -u github.com/pmorjan/pwcalc
 ```
 
 ## Usage
