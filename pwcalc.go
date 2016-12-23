@@ -6,8 +6,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"os"
-	"os/signal"
-	"runtime"
 	"strconv"
 	"strings"
 	"syscall"
@@ -22,37 +20,15 @@ func calcPw(secret string, alias string, length int) string {
 	return base64
 }
 
-func signalHandler() error {
-	oldState, err := terminal.MakeRaw(0)
-	if err != nil {
-		return err
-	}
-	err = terminal.Restore(0, oldState)
-	if err.Error() != "errno 0" {
-		return err
-	}
-
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
-	go func() {
-		<-c
-		terminal.Restore(0, oldState)
-		os.Exit(0)
-	}()
-	return nil
-}
-
 func main() {
 	var alias string
 	var length = 16
 	var err error
 
-	if runtime.GOOS != "windows" {
-		err = signalHandler()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(0)
-		}
+	err = signalHandler()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		os.Exit(1)
 	}
 
 	if len(os.Args) > 1 {
@@ -62,7 +38,7 @@ func main() {
 	if len(os.Args) > 2 {
 		length, err = strconv.Atoi(os.Args[2])
 		if err != nil {
-			fmt.Println(err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
 		if length > 28 || length < 1 {
@@ -80,7 +56,7 @@ func main() {
 	fmt.Print("# secret: ")
 	input, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
-		fmt.Println(err)
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println()
