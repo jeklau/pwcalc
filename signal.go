@@ -17,7 +17,7 @@ func signalHandler() error {
 		return err
 	}
 	err = terminal.Restore(0, oldState)
-	if err.Error() != "errno 0" {
+	if err != nil {
 		return err
 	}
 
