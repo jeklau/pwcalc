@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "SRoPd/V0DDXAPfjAuz+54OIKY7I=",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": "c3b1d0d6d8690eaebe3064711b026770cc37efa3",
+			"revisionTime": "2017-01-07T14:41:52Z"
+		},
+		{
+			"checksumSHA1": "uTQtOqR0ePMMcvuvAIksiIZxhqU=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "d75a52659825e75fff6158388dddc6a5b04f9ba5",
+			"revisionTime": "2016-12-14T18:38:57Z"
+		}
+	],
+	"rootPath": "github.com/pmorjan/pwcalc"
+}
