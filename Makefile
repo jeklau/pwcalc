@@ -6,24 +6,21 @@ $(shell rm -rf $(dir); mkdir -p $(dir))
 all:
 	go build
 
-release: win32 win64 osx freebsd arm linux-x64
+release: windows_amd64 darwin_amd64 freebsd_amd64 linux_arm	linux_amd64
 
-win64:
+windows_amd64:
 	GOOS=windows GOARCH=amd64 go build -o pwcalc.exe && zip $(dir)/pwcalc_$(tag)_$@.zip pwcalc.exe
 
-win32:
-	GOOS=windows GOARCH=386   go build -o pwcalc.exe && zip $(dir)/pwcalc_$(tag)_$@.zip pwcalc.exe
-
-osx:
+darwin_amd64:
 	GOOS=darwin  GOARCH=amd64 go build -o pwcalc && zip $(dir)/pwcalc_$(tag)_$@.zip pwcalc
 
-freebsd:
+freebsd_amd64:
 	GOOS=freebsd GOARCH=amd64 go build -o pwcalc && tar cvzf $(dir)/pwcalc_$(tag)_$@.tgz pwcalc
 
-arm:
+linux_arm:
 	GOOS=linux   GOARCH=arm   go build -o pwcalc && tar cvzf $(dir)/pwcalc_$(tag)_$@.tgz pwcalc
 
-linux-x64:
+linux_amd64:
 	GOOS=linux   GOARCH=amd64 go build -o pwcalc && tar cvzf $(dir)/pwcalc_$(tag)_$@.tgz pwcalc
 
 clean:
